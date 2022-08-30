@@ -7,7 +7,7 @@ app = Flask(__name__)
 # Initializes the component to interact with the MQTT broker.
 mqttc = Mqtt(app)
 
-# Dictionary with the sensors, actuators and the corresponind data.
+# Dictionary with the sensors, actuators and the corresponding data.
 sensors = {
 	'led': {'board': 'NodeMCU1', 'topic': 'led', 'status': 'off'},
 	'temperature': {'board': 'NodeMCU1', 'topic': 'temperature', 'status': ''},
