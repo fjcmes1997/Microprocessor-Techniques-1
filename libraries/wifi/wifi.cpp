@@ -1,8 +1,8 @@
 #include <ESP8266WiFi.h>
 
 
-const char* ssid = "CAS MALAGA_2.4G";
-const char* password = "120ductFIT";
+const char* ssid = "my wifi ssid";
+const char* password = "my wifi password";
 
 void connect_to_wifi()
 {
