@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<head>
+	<title>Sensors panel control</title>
+	<!-- Include Bootstrap CDNs -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+	<div class="container">
+		<h1 class="mx-auto">Sensors panel control</h1>
+		<div class="row">
+			<div class="col">
+			<div class="card">
+				<div class="card-header">
+					<strong>NodeMCU1</strong> - {{ local_ip_1 }} - {{ mac_address_1 }}
+				</div>
+				<div class="card-body">
+					<div class="row p-3 mx-auto">
+						<a href="/led/green" class="btn btn-outline-success w-25 mx-auto" role="button">Green LED</a>
+						<a href="/led/blue" class="btn btn-outline-primary w-25 mx-auto" role="button">Blue LED</a>
+					</div>
+					<div class="row p-3 mx-auto">	
+						<a href="/led/red" class="btn btn-outline-danger w-25 mx-auto" role="button">Red LED</a>
+						<a href="/led/off" class="btn btn-outline-dark w-25 mx-auto" role="button">Off</a>
+					</div>
+					<div class="row p-3">
+						<div class="col">
+							<a href="/ldr/read" class="btn btn-primary" role="button">Get luminosity</a>
+						</div>
+						<div class="col">
+							<input type="number" class="form-control" value={{ sensors['ldr'].status }} disabled>
+						</div>
+						<div class="col">
+							<p class="text-left">lux</p>
+						</div>
+					</div>
+					<div class="row p-3">
+						<div class="col">
+							<a href="/temperature/read" class="btn btn-primary" role="button">Get temperature</a>
+						</div>
+						<div class="col">
+							<input type="number" class="form-control" value={{ sensors['temperature'].status }} disabled>
+						</div>
+						<div class="col">
+							<p class="text-left">ºC</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<div class="card-header">
+						<strong>NodeMCU2</strong> - {{ local_ip_2 }} - {{ mac_address_2 }}
+					</div>
+					<div class="card-body">
+						<div class="row p-3">
+							<div class="col">
+								<a href="/sonar/read" class="btn btn-primary" role="button">Get distance</a>
+							</div>
+							<div class="col">
+								<input type="number" class="form-control" value={{ sensors['sonar'].status }} disabled>
+							</div>
+							<div class="col">
+								<p class="text-left">cm</p>
+							</div>
+						</div>
+					<div class="row p-3">
+						<div class="col">
+							<a href="#" id="servo_url" class="btn btn-primary" role="button">Move servo</a>
+						</div>
+						<div class="col">
+							<div class="box">
+								<div class="rangeSlider"></div>
+									<input type="range" class="circleRange" id="servo" min="0" max="180" value="0" step="1">
+								</div>
+								<div class="value"></div>
+							</div>
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+	</div>
+</body>
+
+<script>
+	var rangeSlider = document.querySelector("#servo");
+	var value = document.querySelector(".value");
+	value.textContent = rangeSlider.value;
+	
+	rangeSlider.oninput = function() {
+		value.textContent = this.value + " degrees";
+	}
+	
+	var servo_button = document.querySelector("#servo_url");
+	servo_button.onclick = function() {
+		var rangeSlider = document.querySelector("#servo");
+		this.href = "/servo/" + rangeSlider.value;
+	}
+</script>
